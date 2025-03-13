@@ -68,7 +68,6 @@
     </style>
 </head>
 <body>
-
 <div class="login-container">
     <h2>Login</h2>
     <form id="loginForm">
@@ -86,15 +85,12 @@
         <p>Don't have an account? <a href="register.php">Register here</a></p>
     </div>
 </div>
-
 <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
+    document.getElementById("loginForm").addEventListener("submit", function(event)
+    {
         event.preventDefault();
-        // Typically you would validate credentials here
-        // For this example, we just redirect
-        window.location.href = '/';
+        window.location.href = 'index.html'; 
     });
 </script>
-
 </body>
 </html>

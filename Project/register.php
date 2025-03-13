@@ -72,7 +72,7 @@
 
 <div class="register-container">
     <h2>Register</h2>
-    <form action="register.php" method="post">
+    <form action="" method="post">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
@@ -101,12 +101,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Here you would typically save the user data to a database
-    // For example:
-    // $conn = new mysqli($servername, $username, $password, $dbname);
-    // $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
-    // $conn->query($sql);
+    // Database connection
+    $servername = "localhost";
+    $dbusername = "root";
+    $dbpassword = "";
+    $dbname = "project";
 
-    echo "Registration successful!";
+    // Create connection
+$conn = new mysqli('localhost', 'root', '', 'project');
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    } else {
+        // Prepare and bind
+        $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $username, $email, $password);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "Registration successful!";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $conn->close();
+    }
 }
 ?>
